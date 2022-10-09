@@ -1,8 +1,11 @@
 #include <iostream>
-#include "DllInjection/Sample.h"
+#include "DllInjection/ProccessInfo.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::wstring hi = L"explorer.exe";
+    const auto p = ProccessInfo(hi);
+
+    std::cout << p.getPid() << std::endl;
     return 0;
 }
