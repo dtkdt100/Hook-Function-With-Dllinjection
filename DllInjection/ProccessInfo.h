@@ -9,9 +9,11 @@ public:
 
 	uint32_t getPid() const;
 
+	Handle m_proccess;
+
+
 private:
 	Handle findCorrectProccess(const std::wstring& pName) const;
 
-	Handle m_proccess;
 };
 

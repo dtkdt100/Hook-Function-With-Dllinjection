@@ -1,4 +1,6 @@
 #include <cstdio>
+#include <iostream>
+#include <sstream>
 #include <windows.h>
 #include <tlhelp32.h>
 #include "ProccessInfo.h"
@@ -10,7 +12,11 @@ ProccessInfo::ProccessInfo(const std::wstring& pName): m_proccess(findCorrectPro
 
 uint32_t ProccessInfo::getPid() const
 {
-    return GetProcessId(m_proccess.getRawHandle());
+    uint32_t pid = GetProcessId(m_proccess.getRawHandle());
+    if (!pid) {
+        throw std::exception(std::to_string(GetLastError()).c_str());
+    }
+    return pid;
 }
 
 Handle ProccessInfo::findCorrectProccess(const std::wstring& pName) const
