@@ -2,19 +2,17 @@
 #include "DllInjection/ProccessInfo.h"
 #include "DllInjection/DllInjector.h"
 
-char evilDLL[] = "C:\\Users\\dolev\\source\\repos\\DllInjection\\x64\\Debug\\DllFile.dll";
-unsigned int evilLen = sizeof(evilDLL) + 1;
+const auto evilDllPath = "C:\\Users\\dolev\\source\\repos\\DllInjection\\x64\\Debug\\DllFile.dll";
+const auto processName = L"Notepad.exe";
 
 int main()
 {   
     try {
-        //const auto processName = L"Notepad.exe";
-        const auto processName = L"Notepad.exe";
         const auto pid = ProccessInfo(processName);
-        const auto d = DllInjector(pid.m_proccess);
+        const auto d = DllInjector(pid.m_proccess, evilDllPath);
     }
     catch (const std::exception& e) {
-        std::cout << "Error " << e.what() << std::endl;
+        std::cout << "Got error " << e.what() << std::endl;
     }
     return 0;
 }

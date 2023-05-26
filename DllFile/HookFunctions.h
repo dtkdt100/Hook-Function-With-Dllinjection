@@ -24,8 +24,6 @@ public:
 	HookFunctions() {};
 
 	int hookCreateFile() {
-
-        MessageBoxW(NULL, L"hello", NULL, MB_OK);
         PEParser::inject();
         return 0;
     };

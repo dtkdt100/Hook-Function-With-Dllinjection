@@ -21,8 +21,8 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
+        MessageBoxW(NULL, L"HOOKED!!", NULL, MB_OK);
         HookFunctions().hookCreateFile();
-       
     case DLL_THREAD_ATTACH:
         break;
     case DLL_THREAD_DETACH:

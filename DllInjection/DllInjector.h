@@ -5,6 +5,6 @@
 class DllInjector
 {
 public:
-	DllInjector(const Handle& pHandle);
+	DllInjector(const Handle& pHandle, const std::string& evilDllPath);
 };
 
