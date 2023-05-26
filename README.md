@@ -14,8 +14,21 @@ We will do it in the usual way:<br />
  
 Thanks to [ZeroMemoryEx](https://github.com/ZeroMemoryEx/Dll-Injector) for the explanation.
 ### 2. PE parser
+The Portable Executable (PE) format is a file format for executables, object code, DLLs and others used in 32-bit and 64-bit versions of Windows operating systems.[2] The PE format is a data structure that encapsulates the information necessary for the Windows OS loader to manage the wrapped executable code. [Wikipedia](https://en.wikipedia.org/wiki/Portable_Executable)
+
+We will get the start of the PE address using `GetModuleHandleA(NULL);`, this will be our imagebase. Then, we need to get to the IAT, in order to this we need to 
+get the dosHeaders, ntHeaders, imageOptionalHeaders, imageDirEntryImport. We will get this using this image: http://www.openrce.org/reference_library/files/reference/PE%20Format.pdf.
+
+After we have the address of the IAT, we will loop threw it (all the dll files that are imported by the process), and for each library, we loop
+threw their imported functions and find out where CreateFileW is stored.
 
 ### 3. Replacing original function
+We now have the address of the original CreateFileW function, this address needs to be saved outside (in a const var that will not be changed), because we
+will have to call it after out hooked function will be called.
 
+Our hooked function will be called: NewCreateFileW. Its return value and params will be EXACTLY the same as CreateFileW (we need to be exactly like the function
+thet we are trying to hook).
+
+Finally, after we have NewCreateFileW and CreateFileW addresses, we can replace the CreateFileW IAT address to our function!! We will to it by change the permission to write - `VirtualProtect`.
 
 ## Debugging
